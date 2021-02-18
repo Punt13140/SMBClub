@@ -21,9 +21,20 @@
         <h1>Hello {{ app.user.pseudo }}! ✅</h1>
 
         <div id="id-cat-home">
-            {{ include('club/_categories_table.html.twig') }}
+            {{ categorie.libelle }}
         </div>
 
+        {% if categories|length == 0 %}
+            Peut créer des discussions
+            //Todo lien créer discussions
+        {% else %}
+            {{ include('club/_categories_table.html.twig') }}
+        {% endif %}
 
+        {% if parent is defined and parent is not null %}
+            <a href="{{ path('index_forum', {'id': parent.id}) }}">Retour parent</a>
+        {% else %}
+            <a href="{{ path('index') }}">Retour accueil</a>
+        {% endif %}
     </div>
 {% endblock %}

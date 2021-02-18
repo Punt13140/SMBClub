@@ -30,11 +30,6 @@ class Categorie
     private $description;
 
     /**
-     * @ORM\Column(type="boolean")
-     */
-    private $isHome;
-
-    /**
      * @ORM\OneToMany(targetEntity=Discussion::class, mappedBy="categorie")
      */
     private $discussions;
@@ -80,18 +75,6 @@ class Categorie
     public function setDescription(string $description): self
     {
         $this->description = $description;
-
-        return $this;
-    }
-
-    public function getIsHome(): ?bool
-    {
-        return $this->isHome;
-    }
-
-    public function setIsHome(bool $isHome): self
-    {
-        $this->isHome = $isHome;
 
         return $this;
     }
@@ -167,4 +150,11 @@ class Categorie
 
         return $this;
     }
+
+    public function __toString()
+    {
+        return $this->libelle;
+    }
+
+
 }
