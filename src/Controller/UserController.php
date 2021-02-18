@@ -6,6 +6,7 @@ use App\Entity\User;
 use App\Form\ChangePwdFormType;
 use App\Form\UserType;
 use App\Repository\UserRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,6 +15,7 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 /**
  * @Route("/user")
+ * @IsGranted("IS_AUTHENTICATED_REMEMBERED")
  */
 class UserController extends AbstractController
 {
@@ -22,6 +24,7 @@ class UserController extends AbstractController
      */
     public function showProfil(): Response
     {
+
         return $this->render('user/show.html.twig');
     }
 
