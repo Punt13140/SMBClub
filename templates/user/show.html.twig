@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}User{% endblock %}
+
+{% block body %}
+    <h1>Profil</h1>
+
+    <div id="id-profil">
+        <p id="p-username">Pseudo : {{ app.user.pseudo }}</p>
+        <p id="p-username">Nom : {{ app.user.lastname }}</p>
+        <p id="p-username">Prenom : {{ app.user.firstname }}</p>
+        <p id="p-username">Email : {{ app.user.email }}</p>
+        <p id="p-username">Date création : {{ app.user.createdAt|date }}</p>
+    </div>
+    <a href="{{ path('user_edit') }}">Modifier</a>
+    <a href="{{ path('user_edit_pwd') }}">Modifier Mot de passe</a>
+{% endblock %}
