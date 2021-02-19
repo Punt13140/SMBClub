@@ -67,7 +67,10 @@ class TopicController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($answer);
             $entityManager->flush();
+
             //@TODO success flash
+            $answer = new Answer();
+            $form = $this->createForm(AnswerType::class, $answer);
         }
 
         return $this->render('topic/show.html.twig', [
