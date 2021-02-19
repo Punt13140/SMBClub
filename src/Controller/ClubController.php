@@ -24,7 +24,7 @@ class ClubController extends AbstractController
 
 
     /**
-     * @Route("/{id}", name="index_forum")
+     * @Route("/cat/{id}", name="index_forum")
      * @param Categorie $categorie
      * @return Response
      */

@@ -18,7 +18,7 @@
     </style>
 
     <div class="example-wrapper">
-        <h1>Hello {{ app.user.pseudo }}! ✅</h1>
+        <h1>Hello {% if app.user is defined and app.user is not null %}{{ app.user.pseudo }}{% endif %}! ✅</h1>
 
         <div id="id-cat-home">
             {{ include('club/_categories_table.html.twig') }}
