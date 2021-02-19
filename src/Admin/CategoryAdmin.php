@@ -11,13 +11,13 @@ use Sonata\AdminBundle\Form\FormMapper;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 
-final class CategorieAdmin extends AbstractAdmin
+final class CategoryAdmin extends AbstractAdmin
 {
     protected function configureFormFields(FormMapper $form)
     {
         $form->add('libelle', TextType::class);
         $form->add('description', TextareaType::class);
-        $form->add('categorieParent');
+        $form->add('categoryParent');
     }
 
     protected function configureDatagridFilters(DatagridMapper $filter)

@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}topic{% endblock %}
+
+{% block body %}
+    <h1>Titre : {{ topic.libelle }}</h1>
+
+    <div id="content">
+        <h2>Contenu</h2>
+        {{ topic.content|raw }}
+    </div>
+    <div id="informations">
+        <p>Discussion créée le {{ topic.createdAt|date('Y-m-d H:i:s') }}</p>
+    </div>
+
+    <div id="answers">
+        <h2>Réponses : </h2>
+        {% for answer in topic.answers %}
+            <div id="answer-{{ answer.id }}">
+                {{ answer.content|raw }}
+
+                <p>le {{ answer.postedAt|date('Y-m-d H:i:s') }} par {{ answer.postedBy.pseudo }}</p>
+            </div>
+        {% endfor %}
+    </div>
+
+    <div id="form-answer">
+        {{ include('topic/_form_answer.html.twig', {'button_label': 'Répondre'}) }}
+    </div>
+
+
+    <a href="{{ path('index_forum', {'id': topic.category.id}) }}">back to list</a>
+
+    <a href="{{ path('topic_edit', {'id': topic.id}) }}">edit</a>
+
+    {{ include('topic/_delete_form.html.twig') }}
+{% endblock %}

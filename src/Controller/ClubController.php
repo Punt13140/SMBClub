@@ -2,8 +2,8 @@
 
 namespace App\Controller;
 
-use App\Entity\Categorie;
-use App\Repository\CategorieRepository;
+use App\Entity\Category;
+use App\Repository\CategoryRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -12,11 +12,12 @@ class ClubController extends AbstractController
 {
     /**
      * @Route("/", name="index")
+     * @param CategoryRepository $categoryRepository
+     * @return Response
      */
-    public function index(CategorieRepository $categorieRepository): Response
+    public function index(CategoryRepository $categoryRepository): Response
     {
-
-        $categories = $categorieRepository->getHome();
+        $categories = $categoryRepository->getHome();
         return $this->render('club/index.html.twig', [
             'categories' => $categories
         ]);
@@ -25,15 +26,16 @@ class ClubController extends AbstractController
 
     /**
      * @Route("/cat/{id}", name="index_forum")
-     * @param Categorie $categorie
+     * @param Category $category
      * @return Response
      */
-    public function forum(Categorie $categorie): Response
+    public function forum(Category $category): Response
     {
-        return $this->render('club/categorie.html.twig', [
-            'categorie' => $categorie,
-            'categories' => $categorie->getCategorieChilds(),
-            'parent' => $categorie->getCategorieParent()
+        return $this->render('club/category.html.twig', [
+            'category' => $category,
+            'categories' => $category->getCategoryChilds(),
+            'parent' => $category->getCategoryParent(),
+            'topics' => $category->getTopics()
         ]);
     }
 }

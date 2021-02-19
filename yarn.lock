@@ -869,10 +869,10 @@
   dependencies:
     acorn "^8.0.5"
 
-"@symfony/webpack-encore@^1.0.0":
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/@symfony/webpack-encore/-/webpack-encore-1.1.0.tgz#82a6f539551644bbcaf02fb7d73e607010cbaa2e"
-  integrity sha512-5LvIt1itMTc6wvD57moXJN+FqHclJPzjZeuBWeacnSBDgh614rynhPyM9voIK6c8erbHjv+tAMTpWLIN/qzuzQ==
+"@symfony/webpack-encore@^1.1.1":
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/@symfony/webpack-encore/-/webpack-encore-1.1.1.tgz#1202458efd77ac38ddbc3a878d1e231629261990"
+  integrity sha512-8wBpS8fq8Cni2K3/s5WrLO/45+OLhizniBR7aGJdM5Va1C/N4wfg6Jv1l3volW9+NcnjFyN/a+n+1JQosdbZxw==
   dependencies:
     "@babel/core" "^7.7.0"
     "@babel/plugin-syntax-dynamic-import" "^7.0.0"
@@ -1579,6 +1579,11 @@ chrome-trace-event@^1.0.2:
   integrity sha512-9e/zx1jw7B4CO+c/RXoCsfg/x1AfUBioy4owYH0bJprEYAx5hRFLRhWBqHAG57D0ZM4H7vxbP7bPe0VwhQRYDQ==
   dependencies:
     tslib "^1.9.0"
+
+ckeditor@^4.0.0:
+  version "4.12.1"
+  resolved "https://registry.yarnpkg.com/ckeditor/-/ckeditor-4.12.1.tgz#954a7b028dd611e44ba51cc7c2fe051cf1052186"
+  integrity sha512-pH2Su4oi0D4iN/3U8nUcwI7/lXHoOJi0aiN8e2zxnm4Ow5kq8eZP2ZGmpYyuqRyKZ2tHaU8+OyYi7laXcjiq9Q==
 
 clean-stack@^2.0.0:
   version "2.2.0"
@@ -2467,6 +2472,14 @@ faye-websocket@^0.11.3:
   integrity sha512-D2y4bovYpzziGgbHYtGCMjlJM36vAl/y+xUyn1C+FVx8szd1E+86KwVw6XvYSzOP8iMpm1X0I4xJD+QtUb36OA==
   dependencies:
     websocket-driver ">=0.5.1"
+
+file-loader@^6.0.0:
+  version "6.2.0"
+  resolved "https://registry.yarnpkg.com/file-loader/-/file-loader-6.2.0.tgz#baef7cf8e1840df325e4390b4484879480eebe4d"
+  integrity sha512-qo3glqyTa61Ytg4u73GultjHGjdRyig3tG6lPtyX/jOEJvHif9uB0/OCI2Kif6ctF3caQTW2G5gym21oAsI4pw==
+  dependencies:
+    loader-utils "^2.0.0"
+    schema-utils "^3.0.0"
 
 fill-range@^7.0.1:
   version "7.0.1"

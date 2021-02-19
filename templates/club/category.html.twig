@@ -20,13 +20,11 @@
     <div class="example-wrapper">
         <h1>Hello {{ app.user.pseudo }}! ✅</h1>
 
-        <div id="id-cat-home">
-            {{ categorie.libelle }}
-        </div>
+        <h2>{{ category.libelle }}</h2>
 
         {% if categories|length == 0 %}
-            Peut créer des discussions
-            //Todo lien créer discussions
+            <a href="{{ path('topic_new', {'id': category.id}) }}">Créer topic</a>
+            {{ include('club/_categories_topics.html.twig') }}
         {% else %}
             {{ include('club/_categories_table.html.twig') }}
         {% endif %}

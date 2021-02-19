@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit topic{% endblock %}
+
+{% block body %}
+    <h1>Edit topic</h1>
+
+    {{ include('topic/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('index_forum', {'id': topic.category.id}) }}">back to list</a>
+
+    {{ include('topic/_delete_form.html.twig') }}
+{% endblock %}

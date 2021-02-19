@@ -1,0 +1,9 @@
+<ul>
+    {% for topic in topics %}
+        <li>
+            <div>
+                <a href="{{ path('topic_show', {'id': topic.id}) }}">{{ topic.libelle }}</a>
+            </div>
+        </li>
+    {% endfor %}
+</ul>

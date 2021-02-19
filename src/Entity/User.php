@@ -64,9 +64,14 @@ class User implements UserInterface
     private $isVerified = false;
 
     /**
-     * @ORM\OneToMany(targetEntity=Discussion::class, mappedBy="createdBy")
+     * @ORM\OneToMany(targetEntity=Topic::class, mappedBy="createdBy")
      */
-    private $discussions;
+    private $topics;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Answer::class, mappedBy="postedBy")
+     */
+    private $answers;
 
     /**
      * User constructor.
@@ -74,7 +79,8 @@ class User implements UserInterface
     public function __construct()
     {
         $this->createdAt = new \DateTime();
-        $this->discussions = new ArrayCollection();
+        $this->topics = new ArrayCollection();
+        $this->answers = new ArrayCollection();
     }
 
 
@@ -102,7 +108,7 @@ class User implements UserInterface
      */
     public function getUsername(): string
     {
-        return (string) $this->email;
+        return (string)$this->email;
     }
 
     /**
@@ -129,7 +135,7 @@ class User implements UserInterface
      */
     public function getPassword(): string
     {
-        return (string) $this->password;
+        return (string)$this->password;
     }
 
     public function setPassword(string $password): self
@@ -190,7 +196,7 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getPseudo(): string
+    public function getPseudo(): ?string
     {
         return $this->pseudo;
     }
@@ -220,29 +226,59 @@ class User implements UserInterface
     }
 
     /**
-     * @return Collection|Discussion[]
+     * @return Collection|Topic[]
      */
-    public function getDiscussions(): Collection
+    public function getTopics(): Collection
     {
-        return $this->discussions;
+        return $this->topics;
     }
 
-    public function addDiscussion(Discussion $discussion): self
+    public function addTopic(Topic $topic): self
     {
-        if (!$this->discussions->contains($discussion)) {
-            $this->discussions[] = $discussion;
-            $discussion->setCreatedBy($this);
+        if (!$this->topics->contains($topic)) {
+            $this->topics[] = $topic;
+            $topic->setCreatedBy($this);
         }
 
         return $this;
     }
 
-    public function removeDiscussion(Discussion $discussion): self
+    public function removeTopic(Topic $topic): self
     {
-        if ($this->discussions->removeElement($discussion)) {
+        if ($this->topics->removeElement($topic)) {
             // set the owning side to null (unless already changed)
-            if ($discussion->getCreatedBy() === $this) {
-                $discussion->setCreatedBy(null);
+            if ($topic->getCreatedBy() === $this) {
+                $topic->setCreatedBy(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Answer[]
+     */
+    public function getAnswers(): Collection
+    {
+        return $this->answers;
+    }
+
+    public function addAnswer(Answer $answer): self
+    {
+        if (!$this->answers->contains($answer)) {
+            $this->answers[] = $answer;
+            $answer->setPostedBy($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAnswer(Answer $answer): self
+    {
+        if ($this->answers->removeElement($answer)) {
+            // set the owning side to null (unless already changed)
+            if ($answer->getPostedBy() === $this) {
+                $answer->setPostedBy(null);
             }
         }
 

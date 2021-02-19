@@ -13,7 +13,18 @@ Encore
     .setPublicPath('/build')
     // only needed for CDN's or sub-directory deploy
     //.setManifestKeyPrefix('build/')
-
+    .copyFiles([
+        {
+            from: './node_modules/ckeditor/',
+            to: 'ckeditor/[path][name].[ext]',
+            pattern: /\.(js|css)$/,
+            includeSubdirectories: false
+        },
+        {from: './node_modules/ckeditor/adapters', to: 'ckeditor/adapters/[path][name].[ext]'},
+        {from: './node_modules/ckeditor/lang', to: 'ckeditor/lang/[path][name].[ext]'},
+        {from: './node_modules/ckeditor/plugins', to: 'ckeditor/plugins/[path][name].[ext]'},
+        {from: './node_modules/ckeditor/skins', to: 'ckeditor/skins/[path][name].[ext]'}
+    ])
     /*
      * ENTRY CONFIG
      *
@@ -56,21 +67,21 @@ Encore
         config.corejs = 3;
     })
 
-    // enables Sass/SCSS support
-    //.enableSassLoader()
+// enables Sass/SCSS support
+//.enableSassLoader()
 
-    // uncomment if you use TypeScript
-    //.enableTypeScriptLoader()
+// uncomment if you use TypeScript
+//.enableTypeScriptLoader()
 
-    // uncomment if you use React
-    //.enableReactPreset()
+// uncomment if you use React
+//.enableReactPreset()
 
-    // uncomment to get integrity="..." attributes on your script & link tags
-    // requires WebpackEncoreBundle 1.4 or higher
-    //.enableIntegrityHashes(Encore.isProduction())
+// uncomment to get integrity="..." attributes on your script & link tags
+// requires WebpackEncoreBundle 1.4 or higher
+//.enableIntegrityHashes(Encore.isProduction())
 
-    // uncomment if you're having problems with a jQuery plugin
-    //.autoProvidejQuery()
+// uncomment if you're having problems with a jQuery plugin
+//.autoProvidejQuery()
 ;
 
 module.exports = Encore.getWebpackConfig();
