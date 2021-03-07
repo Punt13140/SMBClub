@@ -73,6 +73,9 @@ class User implements UserInterface
      */
     private $answers;
 
+    public static $roleAdmin = "ROLE_ADMIN";
+    public static $roleUser = "ROLE_USER";
+
     /**
      * User constructor.
      */
@@ -118,7 +121,7 @@ class User implements UserInterface
     {
         $roles = $this->roles;
         // guarantee every user at least has ROLE_USER
-        $roles[] = 'ROLE_USER';
+        $roles[] = User::$roleUser;
 
         return array_unique($roles);
     }

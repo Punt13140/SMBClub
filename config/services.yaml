@@ -35,4 +35,12 @@ services:
     class: App\Admin\CategoryAdmin
     arguments: [ ~, App\Entity\Category, ~ ]
     tags:
-      - { name: sonata.admin, manager_type: orm, label: Category }
+      - { name: sonata.admin, manager_type: orm, label: Categories }
+
+
+  admin.topic:
+    class: App\Admin\TopicAdmin
+    arguments: [ ~, App\Entity\Topic, ~ ]
+    tags:
+      - { name: sonata.admin, manager_type: orm, label: Discussions }
+

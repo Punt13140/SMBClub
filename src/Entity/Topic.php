@@ -57,6 +57,11 @@ class Topic
     private $editedAt;
 
     /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isAnnouncement;
+
+    /**
      * Topic constructor.
      * @param $category
      */
@@ -64,6 +69,7 @@ class Topic
     {
         $this->category = $category;
         $this->answers = new ArrayCollection();
+        $this->isAnnouncement = false;
     }
 
 
@@ -170,6 +176,18 @@ class Topic
     public function setEditedAt(?\DateTimeInterface $editedAt): self
     {
         $this->editedAt = $editedAt;
+
+        return $this;
+    }
+
+    public function getIsAnnouncement(): ?bool
+    {
+        return $this->isAnnouncement;
+    }
+
+    public function setIsAnnouncement(bool $isAnnouncement): self
+    {
+        $this->isAnnouncement = $isAnnouncement;
 
         return $this;
     }

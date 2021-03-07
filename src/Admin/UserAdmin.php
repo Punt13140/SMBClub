@@ -4,37 +4,37 @@
 namespace App\Admin;
 
 
+use App\Entity\User;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
-final class CategoryAdmin extends AbstractAdmin
+final class UserAdmin extends AbstractAdmin
 {
     protected function configureFormFields(FormMapper $form)
     {
-        $form->add('libelle', TextType::class);
-        $form->add('description', TextareaType::class);
-        $form->add('categoryParent');
+        $form->add('roles', ChoiceType::class, [
+        ]);
     }
 
     protected function configureDatagridFilters(DatagridMapper $filter)
     {
-        $filter->add('libelle');
+        $filter->add('pseudo')
+            ->add('email')
+            ->add('isVerified');
     }
 
     protected function configureListFields(ListMapper $list)
     {
-        $list->add('libelle')
+        $list->add('pseudo')
+            ->add('email')
+            ->add('Vérifier ?')
             ->add('_action', null, [
                 'actions' => [
-                    'show' => [],
                     'edit' => [],
-                    'delete' => []
                 ]
             ]);
     }
-
 }

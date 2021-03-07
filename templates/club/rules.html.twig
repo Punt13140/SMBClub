@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ClubController!{% endblock %}
+
+{% block body %}
+    <h1>Hello {% if app.user is defined and app.user is not null %}{{ app.user.pseudo }}{% endif %}! ✅</h1>
+
+    <div id="id-cat-home">
+        //todo remplir le règlement
+    </div>
+
+
+    </div>
+{% endblock %}
