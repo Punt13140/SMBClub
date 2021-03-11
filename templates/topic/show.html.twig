@@ -3,6 +3,9 @@
 {% block title %}topic{% endblock %}
 
 {% block body %}
+
+    {{ include('club/_build_tree.html.twig') }}
+
     <h1>Titre : {{ topic.libelle }}</h1>
 
     <div id="content">
@@ -10,23 +13,31 @@
         {{ topic.content|raw }}
     </div>
     <div id="informations">
-        <p>Discussion créée le {{ topic.createdAt|date('Y-m-d H:i:s') }}</p>
+        {% if app.user == topic.createdBy or is_granted('ROLE_MODO') %}
+            <a href="{{ path('topic_edit', {'id': topic.id}) }}">Editer</a>
+        {% endif %}
+        <p>Discussion créée le {{ topic.createdAt|date('Y-m-d H:i:s') }} par {{ topic.createdBy.pseudo }}</p>
+        <p>Discussion editer le {{ topic.editedAt|date('Y-m-d H:i:s') }}</p>
     </div>
 
-    <div id="answers">
-        <h2>Réponses : </h2>
-        {% for answer in topic.answers %}
-            <div id="answer-{{ answer.id }}">
-                {{ answer.content|raw }}
+    {% if topic.answers|length > 0 %}
+        <div id="answers">
+            <h2>Réponses : </h2>
+            {% for answer in topic.answers %}
+                <div id="answer-{{ answer.id }}">
+                    {{ answer.content|raw }}
 
-                <p>le {{ answer.postedAt|date('Y-m-d H:i:s') }} par {{ answer.postedBy.pseudo }}</p>
-            </div>
-        {% endfor %}
-    </div>
+                    <p>le {{ answer.postedAt|date('Y-m-d H:i:s') }} par {{ answer.postedBy.pseudo }}</p>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
 
-    <div id="form-answer">
-        {{ include('topic/_form_answer.html.twig', {'button_label': 'Répondre'}) }}
-    </div>
+    {% if form is defined %}
+        <div id="form-answer">
+            {{ include('topic/_form_answer.html.twig', {'button_label': 'Répondre'}) }}
+        </div>
+    {% endif %}
 
 
     <a href="{{ path('index_forum', {'id': topic.category.id}) }}">back to list</a>

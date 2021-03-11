@@ -5,14 +5,17 @@ namespace App\Controller;
 use App\Entity\Answer;
 use App\Entity\Category;
 use App\Entity\Topic;
+use App\Entity\User;
 use App\Form\AnswerType;
 use App\Form\TopicType;
 use App\Repository\TopicRepository;
 use App\Repository\UserRepository;
+use App\Service\CategoryService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 /**
  * @Route("/topic")
@@ -28,8 +31,8 @@ class TopicController extends AbstractController
      */
     public function new(Request $request, Category $category, UserRepository $userRepository): Response
     {
-        $topic = new Topic($category);
-        $form = $this->createForm(TopicType::class, $topic);
+        $topic = new Topic($category, $this->getUser());
+        $form = $this->createForm(TopicType::class, $topic, ['hasModeratorAuthorization' => $this->isGranted(User::$roleModerator)]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -52,31 +55,38 @@ class TopicController extends AbstractController
 
     /**
      * @Route("/{id}", name="topic_show", methods={"GET", "POST"})
+     * @param Request $request
+     * @param Topic $topic
+     * @param UserRepository $userRepository
+     * @param CategoryService $categoryService
+     * @return Response
      */
-    public function show(Request $request, Topic $topic, UserRepository $userRepository): Response
+    public function show(Request $request, Topic $topic, UserRepository $userRepository, CategoryService $categoryService): Response
     {
-        $answer = new Answer();
-        $form = $this->createForm(AnswerType::class, $answer);
-        $form->handleRequest($request);
+        $return_arr = [
+            'topic' => $topic,
+            'build_tree' => $categoryService->buildTreeLink($topic->getCategory())
+        ];
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $answer->setTopic($topic);
-            $answer->setPostedAt(new \DateTime());
-            $answer->setPostedBy($userRepository->findOneBy(['email' => $this->getUser()->getUsername()]));
-
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($answer);
-            $entityManager->flush();
-
-            //@TODO success flash
-            $answer = new Answer();
+        if (!$topic->getIsPinned()) {
+            $answer = new Answer(new \DateTime(), $this->getUser(), $topic);
             $form = $this->createForm(AnswerType::class, $answer);
+            $form->handleRequest($request);
+
+            if ($form->isSubmitted() && $form->isValid()) {
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->persist($answer);
+                $entityManager->flush();
+
+                //@TODO success flash
+                $answer = new Answer(new \DateTime(), $this->getUser(), $topic);
+
+                $form = $this->createForm(AnswerType::class, $answer);
+            }
+            $return_arr['form'] = $form->createView();
         }
 
-        return $this->render('topic/show.html.twig', [
-            'topic' => $topic,
-            'form' => $form->createView(),
-        ]);
+        return $this->render('topic/show.html.twig', $return_arr);
     }
 
     /**
@@ -84,13 +94,19 @@ class TopicController extends AbstractController
      */
     public function edit(Request $request, Topic $topic): Response
     {
-        $form = $this->createForm(TopicType::class, $topic);
+        if (!$this->isGranted('ROLE_MODO') || $topic->getCreatedBy() !== $this->getUser()) {
+            throw new AccessDeniedException();
+        }
+        $form = $this->createForm(TopicType::class, $topic, ['hasModeratorAuthorization' => $this->isGranted(User::$roleModerator)]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $topic->setEditedAt(new \DateTime());
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('topic_index');
+            return $this->redirectToRoute('topic_show', [
+                'id' => $topic->getId()
+            ]);
         }
 
         return $this->render('topic/edit.html.twig', [

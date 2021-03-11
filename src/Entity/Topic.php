@@ -6,6 +6,7 @@ use App\Repository\TopicRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass=TopicRepository::class)
@@ -59,17 +60,19 @@ class Topic
     /**
      * @ORM\Column(type="boolean")
      */
-    private $isAnnouncement;
+    private $isPinned;
 
     /**
      * Topic constructor.
-     * @param $category
+     * @param Category $category
+     * @param UserInterface $user
      */
-    public function __construct($category)
+    public function __construct(Category $category, UserInterface $user)
     {
         $this->category = $category;
         $this->answers = new ArrayCollection();
-        $this->isAnnouncement = false;
+        $this->isPinned = false;
+        $this->createdBy = $user;
     }
 
 
@@ -180,14 +183,14 @@ class Topic
         return $this;
     }
 
-    public function getIsAnnouncement(): ?bool
+    public function getIsPinned(): ?bool
     {
-        return $this->isAnnouncement;
+        return $this->isPinned;
     }
 
-    public function setIsAnnouncement(bool $isAnnouncement): self
+    public function setIsPinned(bool $isPinned): self
     {
-        $this->isAnnouncement = $isAnnouncement;
+        $this->isPinned = $isPinned;
 
         return $this;
     }

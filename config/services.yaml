@@ -37,10 +37,14 @@ services:
     tags:
       - { name: sonata.admin, manager_type: orm, label: Categories }
 
-
   admin.topic:
     class: App\Admin\TopicAdmin
     arguments: [ ~, App\Entity\Topic, ~ ]
     tags:
       - { name: sonata.admin, manager_type: orm, label: Discussions }
 
+  admin.user:
+    class: App\Admin\UserAdmin
+    arguments: [ ~, App\Entity\User, ~ ]
+    tags:
+      - { name: sonata.admin, manager_type: orm, label: Utilisateurs }

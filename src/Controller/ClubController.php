@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Category;
 use App\Repository\CategoryRepository;
 use App\Repository\TopicRepository;
+use App\Service\CategoryService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -29,9 +30,10 @@ class ClubController extends AbstractController
      * @Route("/cat/{id}", name="index_forum")
      * @param Category $category
      * @param TopicRepository $topicRepository
+     * @param CategoryService $categoryService
      * @return Response
      */
-    public function forum(Category $category, TopicRepository $topicRepository): Response
+    public function forum(Category $category, TopicRepository $topicRepository, CategoryService $categoryService): Response
     {
         return $this->render('club/category.html.twig', [
             'category' => $category,
@@ -39,12 +41,13 @@ class ClubController extends AbstractController
             'parent' => $category->getCategoryParent(),
             'topics' => $topicRepository->findBy([
                 'category' => $category,
-                'isAnnouncement' => false
+                'isPinned' => false
             ]),
             'topics_announce' => $topicRepository->findBy([
                 'category' => $category,
-                'isAnnouncement' => true
-            ])
+                'isPinned' => true
+            ]),
+            'build_tree' => $categoryService->buildTreeLink($category)
         ]);
     }
 

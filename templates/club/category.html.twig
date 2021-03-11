@@ -20,6 +20,8 @@
     <div class="example-wrapper">
         <h1>Hello {{ app.user.pseudo }}! ✅</h1>
 
+        {{ include('club/_build_tree.html.twig') }}
+
         <h2>{{ category.libelle }}</h2>
 
         {% if categories|length == 0 %}

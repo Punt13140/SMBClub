@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\AnswerRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass=AnswerRepository::class)
@@ -43,6 +44,20 @@ class Answer
      * @ORM\JoinColumn(nullable=false)
      */
     private $topic;
+
+    /**
+     * Answer constructor.
+     * @param \DateTime $postedAt
+     * @param UserInterface $postedBy
+     * @param Topic $topic
+     */
+    public function __construct(\DateTime $postedAt, UserInterface $postedBy, Topic $topic)
+    {
+        $this->postedAt = $postedAt;
+        $this->postedBy = $postedBy;
+        $this->topic = $topic;
+    }
+
 
     public function getId(): ?int
     {

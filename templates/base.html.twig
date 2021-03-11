@@ -71,7 +71,13 @@
 </style>
 
 <div class="example-wrapper">
-    {% block body %}{% endblock %}
+    {% if is_granted('ROLE_USER') %}
+        {% block body %}{% endblock %}
+    {% else %}
+        {% block login %}
+            Veuillez vous connecter.
+        {% endblock %}
+    {% endif %}
 </div>
 </body>
 </html>

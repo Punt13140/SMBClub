@@ -73,7 +73,9 @@ class User implements UserInterface
      */
     private $answers;
 
+    public static $roleSuperAdmin = "ROLE_SUPER_ADMIN";
     public static $roleAdmin = "ROLE_ADMIN";
+    public static $roleModerator = "ROLE_MODO";
     public static $roleUser = "ROLE_USER";
 
     /**
