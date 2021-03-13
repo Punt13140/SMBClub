@@ -18,7 +18,7 @@ final class TopicAdmin extends AbstractAdmin
         $form->add('libelle', TextType::class);
         $form->add('content', TextareaType::class);
         $form->add('category');
-        $form->add('isAnnouncement');
+        $form->add('isPinned');
     }
 
     protected function configureDatagridFilters(DatagridMapper $filter)

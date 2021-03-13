@@ -20,19 +20,17 @@
     <div class="example-wrapper">
         <h1>Hello {{ app.user.pseudo }}! ✅</h1>
 
-        {{ include('club/_build_tree.html.twig') }}
-
         <h2>{{ category.libelle }}</h2>
 
         {% if categories|length == 0 %}
-            <a href="{{ path('topic_new', {'id': category.id}) }}">Créer topic</a>
+            <a href="{{ path('topic_new', {'id_cat': category.id}) }}">Créer topic</a>
             {{ include('club/_categories_topics.html.twig') }}
         {% else %}
             {{ include('club/_categories_table.html.twig') }}
         {% endif %}
 
         {% if parent is defined and parent is not null %}
-            <a href="{{ path('index_forum', {'id': parent.id}) }}">Retour parent</a>
+            <a href="{{ path('index_forum', {'id_cat': parent.id}) }}">Retour parent</a>
         {% else %}
             <a href="{{ path('index') }}">Retour accueil</a>
         {% endif %}

@@ -51,9 +51,8 @@ class Answer
      * @param UserInterface $postedBy
      * @param Topic $topic
      */
-    public function __construct(\DateTime $postedAt, UserInterface $postedBy, Topic $topic)
+    public function __construct(UserInterface $postedBy, Topic $topic)
     {
-        $this->postedAt = $postedAt;
         $this->postedBy = $postedBy;
         $this->topic = $topic;
     }

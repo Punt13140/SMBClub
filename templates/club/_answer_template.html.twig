@@ -1,0 +1,18 @@
+<div id="answer-{{ answer.id }}">
+    <div id="author-{{ answer.id }}">
+        {{ answer.postedBy.pseudo }}
+    </div>
+    <div id="answer-content-{{ answer.id }}">
+        <div class="answer-details">
+            {{ answer.postedAt|date('Y-m-d H:i:s') }}
+        </div>
+        <div class="answer-content">
+            {{ answer.content|raw }}
+        </div>
+        {% if app.user == answer.postedBy %}
+            <div class="answer-action">
+                <a>Bouton éditer</a>
+            </div>
+        {% endif %}
+    </div>
+</div>

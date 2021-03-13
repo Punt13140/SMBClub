@@ -73,6 +73,7 @@ class Topic
         $this->answers = new ArrayCollection();
         $this->isPinned = false;
         $this->createdBy = $user;
+        $this->editedAt = null;
     }
 
 
@@ -117,12 +118,12 @@ class Topic
         return $this;
     }
 
-    public function getCreatedBy(): ?User
+    public function getCreatedBy(): UserInterface
     {
         return $this->createdBy;
     }
 
-    public function setCreatedBy(?User $createdBy): self
+    public function setCreatedBy(UserInterface $createdBy): self
     {
         $this->createdBy = $createdBy;
 

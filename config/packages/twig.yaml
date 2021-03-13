@@ -3,6 +3,8 @@ twig:
   debug: '%kernel.debug%'
   strict_variables: '%kernel.debug%'
   exception_controller: null
+  globals:
+    categoryService: '@App\Service\CategoryService'
 
   form_themes:
     - '@FOSCKEditor/Form/ckeditor_widget.html.twig'

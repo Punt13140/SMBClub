@@ -3,9 +3,9 @@
 {% block title %}New topic{% endblock %}
 
 {% block body %}
-    <h1>Create new topic</h1>
+    <h1>[{{ category.libelle }}] Créer un nouveau thread</h1>
 
     {{ include('topic/_form.html.twig') }}
 
-    <a href="{{ path('index_forum', {'id': category.id}) }}">back to list</a>
+    <a href="{{ path('index_forum', {'id_cat': category.id}) }}">back to list</a>
 {% endblock %}

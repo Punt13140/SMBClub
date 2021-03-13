@@ -1,7 +1,7 @@
-{% if build_tree is defined %}
+{% if categoryService.buildTreeLinkRequest is defined %}
     <p><a href="{{ path('index') }}">Logo Maison</a>
-        {% for cat in build_tree %}
-            / <a href="{{ path('index_forum', {'id': cat.id}) }}">{{ cat.libelle }}</a>
+        {% for cat in categoryService.buildTreeLinkRequest %}
+            / <a href="{{ path('index_forum', {'id_cat': cat.id}) }}">{{ cat.libelle }}</a>
         {% endfor %}
     </p>
 {% endif %}

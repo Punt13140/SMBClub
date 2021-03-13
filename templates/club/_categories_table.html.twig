@@ -2,13 +2,13 @@
     {% for category in categories %}
         <li>
             <div>
-                <a href="{{ path('index_forum', {'id': category.id}) }}">{{ category.libelle }}</a>
+                <a href="{{ path('index_forum', {'id_cat': category.id}) }}">{{ category.libelle }}</a>
                 - {{ category.description }}
                 {% if category.categoryChilds|length > 0 %}
                     <ul>
                         {% for subcat in category.categoryChilds %}
                             <li>
-                                <a href="{{ path('index_forum', {'id': subcat.id}) }}">{{ subcat.libelle }}</a>
+                                <a href="{{ path('index_forum', {'id_cat': subcat.id}) }}">{{ subcat.libelle }}</a>
                             </li>
                         {% endfor %}
                     </ul>

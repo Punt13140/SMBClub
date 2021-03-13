@@ -4,7 +4,7 @@
         {% for topic in topics_announce %}
             <li>
                 <div>
-                    <a href="{{ path('topic_show', {'id': topic.id}) }}">{{ topic.libelle }}</a>
+                    <a href="{{ path('topic_show', {'id_topic': topic.id, 'id_cat': topic.category.id}) }}">{{ topic.libelle }}</a>
                 </div>
             </li>
         {% endfor %}
@@ -16,7 +16,7 @@
     {% for topic in topics %}
         <li>
             <div>
-                <a href="{{ path('topic_show', {'id': topic.id}) }}">{{ topic.libelle }}</a>
+                <a href="{{ path('topic_show', {'id_topic': topic.id, 'id_cat': topic.category.id}) }}">{{ topic.libelle }}</a>
             </div>
         </li>
     {% endfor %}

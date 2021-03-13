@@ -71,6 +71,7 @@
 </style>
 
 <div class="example-wrapper">
+    {{ include('club/_build_tree.html.twig') }}
     {% if is_granted('ROLE_USER') %}
         {% block body %}{% endblock %}
     {% else %}

@@ -13,7 +13,9 @@ class AnswerType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('content', CKEditorType::class);
+            ->add('content', CKEditorType::class, [
+                'label' => false
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)

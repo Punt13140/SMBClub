@@ -7,7 +7,7 @@
 
     {{ include('topic/_form.html.twig', {'button_label': 'Update'}) }}
 
-    <a href="{{ path('index_forum', {'id': topic.category.id}) }}">back to list</a>
+    <a href="{{ path('index_forum', {'id_cat': topic.category.id}) }}">back to list</a>
 
     {{ include('topic/_delete_form.html.twig') }}
 {% endblock %}
