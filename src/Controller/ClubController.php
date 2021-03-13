@@ -191,6 +191,56 @@ class ClubController extends AbstractController
 
 
     /**
+     * @Route("/{id}/edit", name="answer_edit", methods={"GET","POST"})
+     * @Route("/cat/{id_cat}/topic/{id_topic}/answer/{id_answer}/edit", name="answer_edit", methods={"GET", "POST"})
+     * @Entity("category", expr="repository.find(id_cat)")
+     * @Entity("topic", expr="repository.find(id_topic)")
+     * @Entity("answer", expr="repository.find(id_answer)")
+     * @param Request $request
+     * @param Category $category
+     * @param Topic $topic
+     * @param Answer $answer
+     * @return Response
+     */
+    public function editAnswer(Request $request, Category $category, Topic $topic, Answer $answer): Response
+    {
+        $form = $this->createForm(AnswerType::class, $answer);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $answer->setEditedAt(new \DateTime());
+            $this->getDoctrine()->getManager()->flush();
+
+            return $this->redirectToRoute('topic_show', [
+                'id_cat' => $category->getId(),
+                'id_topic' => $topic->getId()
+            ]);
+        }
+
+        return $this->render('answer/edit.html.twig', [
+            'answer' => $answer,
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/{id}", name="answer_delete", methods={"DELETE"})
+     */
+    public function delete(Request $request, Answer $answer): Response
+    {
+        if ($this->isCsrfTokenValid('delete' . $answer->getId(), $request->request->get('_token'))) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->remove($answer);
+            $entityManager->flush();
+        }
+
+        return $this->redirectToRoute('topic_show', [
+            'id' => $answer->getTopic()->getId()
+        ]);
+    }
+
+
+    /**
      * @Route("/rules", name="rules")
      * @return Response
      */

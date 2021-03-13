@@ -5,13 +5,18 @@
     <div id="answer-content-{{ answer.id }}">
         <div class="answer-details">
             {{ answer.postedAt|date('Y-m-d H:i:s') }}
+
+            {% if answer.editedAt is not null %}
+                <p>Réponse editer le {{ topic.editedAt|date('Y-m-d H:i:s') }}</p>
+            {% endif %}
         </div>
         <div class="answer-content">
             {{ answer.content|raw }}
         </div>
         {% if app.user == answer.postedBy %}
             <div class="answer-action">
-                <a>Bouton éditer</a>
+                <a href="{{ path('answer_edit', {'id_cat': answer.topic.category.id, 'id_topic': answer.topic.id, 'id_answer': answer.id}) }}">Bouton
+                    éditer</a>
             </div>
         {% endif %}
     </div>
