@@ -2,6 +2,9 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiProperty;
+use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Annotation\ApiSubresource;
 use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -12,6 +15,11 @@ use Symfony\Component\Security\Core\User\UserInterface;
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
  * @UniqueEntity(fields={"email"}, message="There is already an account with this email")
+ *
+ * @ApiResource(
+ *     collectionOperations={"get"},
+ *     itemOperations={"get"}
+ * )
  */
 class User implements UserInterface
 {
@@ -70,12 +78,32 @@ class User implements UserInterface
 
     /**
      * @ORM\OneToMany(targetEntity=Answer::class, mappedBy="postedBy")
+     * @ApiSubresource
      */
     private $answers;
 
+    /**
+     * @ApiProperty(readable = false)
+     * @var string
+     */
     public static $roleSuperAdmin = "ROLE_SUPER_ADMIN";
+
+    /**
+     * @ApiProperty(readable = false)
+     * @var string
+     */
     public static $roleAdmin = "ROLE_ADMIN";
+
+    /**
+     * @ApiProperty(readable = false)
+     * @var string
+     */
     public static $roleModerator = "ROLE_MODO";
+
+    /**
+     * @ApiProperty(readable = false)
+     * @var string
+     */
     public static $roleUser = "ROLE_USER";
 
     /**

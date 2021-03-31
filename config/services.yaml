@@ -48,3 +48,7 @@ services:
     arguments: [ ~, App\Entity\User, ~ ]
     tags:
       - { name: sonata.admin, manager_type: orm, label: Utilisateurs }
+
+
+  App\Doctrine\AnswerListener:
+    tags: [ doctrine.orm.entity_listener ]

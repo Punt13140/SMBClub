@@ -57,7 +57,6 @@ class ClubController extends AbstractController
                 'category' => $category,
                 'isPinned' => true
             ]),
-            'build_tree' => $categoryService->buildTreeLink($category)
         ]);
     }
 
@@ -75,31 +74,31 @@ class ClubController extends AbstractController
      */
     public function showTopic(Request $request, Category $category, Topic $topic, UserRepository $userRepository, CategoryService $categoryService): Response
     {
-        $return_arr = [
+        /*
+                if (!$topic->getIsPinned()) {
+                    $answer = new Answer($this->getUser(), $topic);
+                    $form = $this->createForm(AnswerType::class, $answer);
+                    $form->handleRequest($request);
+
+                    if ($form->isSubmitted() && $form->isValid()) {
+                        $answer->setPostedAt(new \DateTime());
+                        $entityManager = $this->getDoctrine()->getManager();
+                        $entityManager->persist($answer);
+                        $entityManager->flush();
+
+                        //@TODO success flash
+                        $answer = new Answer($this->getUser(), $topic);
+
+                        $form = $this->createForm(AnswerType::class, $answer);
+                    }
+                    $return_arr['form'] = $form->createView();
+                }*/
+
+
+        return $this->render('topic/show.html.twig', [
             'topic' => $topic,
-            'build_tree' => $categoryService->buildTreeLink($topic->getCategory())
-        ];
-
-        if (!$topic->getIsPinned()) {
-            $answer = new Answer($this->getUser(), $topic);
-            $form = $this->createForm(AnswerType::class, $answer);
-            $form->handleRequest($request);
-
-            if ($form->isSubmitted() && $form->isValid()) {
-                $answer->setPostedAt(new \DateTime());
-                $entityManager = $this->getDoctrine()->getManager();
-                $entityManager->persist($answer);
-                $entityManager->flush();
-
-                //@TODO success flash
-                $answer = new Answer($this->getUser(), $topic);
-
-                $form = $this->createForm(AnswerType::class, $answer);
-            }
-            $return_arr['form'] = $form->createView();
-        }
-
-        return $this->render('topic/show.html.twig', $return_arr);
+            'nb_page' => intval(sizeof($topic->getAnswers()->getValues()) / 10) + 1
+        ]);
     }
 
 

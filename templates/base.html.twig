@@ -9,9 +9,6 @@
         {{ encore_entry_link_tags('app') }}
     {% endblock %}
 
-    {% block javascripts %}
-        {{ encore_entry_script_tags('app') }}
-    {% endblock %}
 </head>
 <body>
 <div id="flash">
@@ -73,6 +70,18 @@
 <div class="example-wrapper">
     {{ include('club/_build_tree.html.twig') }}
     {% if is_granted('ROLE_USER') %}
+
+        <div style="border: 1px solid #000000">
+
+            {% verbatim %}
+            <div id="app">
+                {{ message }}
+            </div>
+        {% endverbatim %}
+
+        </div>
+
+
         {% block body %}{% endblock %}
     {% else %}
         {% block login %}
@@ -80,5 +89,7 @@
         {% endblock %}
     {% endif %}
 </div>
+
+
 </body>
 </html>

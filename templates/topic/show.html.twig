@@ -20,20 +20,18 @@
         {% endif %}
     </div>
 
-    {% if topic.answers|length > 0 %}
-        <div id="answers">
-            <h2>Réponses : </h2>
-            {% for answer in topic.answers %}
-                {{ include('club/_answer_template.html.twig') }}
-            {% endfor %}
-        </div>
-    {% endif %}
 
-    {% if form is defined %}
-        <div id="form-answer">
-            {{ include('topic/_form_answer.html.twig', {'button_label': 'Réponse rapide'}) }}
-        </div>
-    {% endif %}
+    <div>
+        <h2>Réponses :</h2>
+        <section id="answer">
+            <answer topic-id="{{ topic.id }}"
+                    last-page="{{ app.request.get('last_page') }}"
+                    nb-page="{{ nb_page }}"></answer>
+        </section>
+
+        Fin réponses.
+    </div>
+
 
 
     <a href="{{ path('index_forum', {'id_cat': topic.category.id}) }}">back to list</a>
@@ -41,4 +39,8 @@
     <a href="{{ path('topic_edit', {'id_cat': topic.category.id,'id_topic': topic.id}) }}">edit</a>
 
     {{ include('topic/_delete_form.html.twig') }}
+
+
+    {{ encore_entry_script_tags('js/answer') }}
 {% endblock %}
+

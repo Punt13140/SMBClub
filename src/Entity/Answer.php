@@ -2,12 +2,19 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\AnswerRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass=AnswerRepository::class)
+ * @ORM\EntityListeners({"App\Doctrine\AnswerListener"})
+ * @ApiResource(
+ *     collectionOperations={"get", "post"},
+ *     itemOperations={"get"},
+ *     attributes={"pagination_items_per_page" = 3}
+ * )
  */
 class Answer
 {
@@ -47,13 +54,10 @@ class Answer
 
     /**
      * Answer constructor.
-     * @param \DateTime $postedAt
-     * @param UserInterface $postedBy
      * @param Topic $topic
      */
-    public function __construct(UserInterface $postedBy, Topic $topic)
+    public function __construct(Topic $topic)
     {
-        $this->postedBy = $postedBy;
         $this->topic = $topic;
     }
 
@@ -99,12 +103,12 @@ class Answer
         return $this;
     }
 
-    public function getPostedBy(): ?User
+    public function getPostedBy(): ?UserInterface
     {
         return $this->postedBy;
     }
 
-    public function setPostedBy(?User $postedBy): self
+    public function setPostedBy(UserInterface $postedBy): self
     {
         $this->postedBy = $postedBy;
 
