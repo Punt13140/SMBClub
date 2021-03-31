@@ -12,6 +12,7 @@ use App\Repository\CategoryRepository;
 use App\Repository\TopicRepository;
 use App\Repository\UserRepository;
 use App\Service\CategoryService;
+use Knp\Component\Pager\PaginatorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -73,10 +74,15 @@ class ClubController extends AbstractController
      * @param CategoryService $categoryService
      * @return Response
      */
-    public function showTopic(Request $request, Category $category, Topic $topic, UserRepository $userRepository, CategoryService $categoryService): Response
+    public function showTopic(Request $request, Category $category, Topic $topic, UserRepository $userRepository, CategoryService $categoryService, PaginatorInterface $paginator): Response
     {
         $return_arr = [
             'topic' => $topic,
+            'answers' => $paginator->paginate(
+                $topic->getAnswers(),
+                $request->query->getInt('page', 1),
+                5
+            ),
             'build_tree' => $categoryService->buildTreeLink($topic->getCategory())
         ];
 

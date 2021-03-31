@@ -20,12 +20,15 @@
         {% endif %}
     </div>
 
-    {% if topic.answers|length > 0 %}
+    {% if answers|length > 0 %}
         <div id="answers">
             <h2>Réponses : </h2>
-            {% for answer in topic.answers %}
+            {% for answer in answers %}
                 {{ include('club/_answer_template.html.twig') }}
             {% endfor %}
+        </div>
+        <div class="navigation">
+            {{ knp_pagination_render(answers) }}
         </div>
     {% endif %}
 
